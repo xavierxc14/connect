@@ -7,23 +7,27 @@ for (var i = 1; i <= 6; i++) {
 	grille[i] = new Array(8);
 }
 
+/* valeur score initialise a zero pour les deux joeurs. */
 var valueOfInputRed = document.getElementById("scoreRouge").value = 0;
 var valueOfInputYellow = document.getElementById("scoreJaune").value = 0;
+/* bonus couleur mis a jaune par défaut. */
 document.getElementById("ma_balise").style.color = "yellow";
 
-
+/* function scorePlayerRed pour gerer le score du player red. */
 function scorePlayerRed(){
    scoresRed = document.getElementById("scoreRouge").value;
    scoresRed++;
    document.getElementById("scoreRouge").value = scoresRed;
 }
 
+/* function scorePlayerYellow pour gerer le score du player jaune. */
 function scorePlayerYellow(){
    scoresYellow = document.getElementById("scoreJaune").value;
    scoresYellow++;
    document.getElementById("scoreJaune").value = scoresYellow;
 }
 
+/* function verificationPions pour verifier les pions. */
 function verificationPions() {
 	for (var i = 1; i <= 6; i++) {
 		countX = 0;
@@ -41,6 +45,7 @@ function verificationPions() {
 			} else {
 			    scorePlayerRed();
 			}
+			remiseZero();
 		}
 	}
 	joueur = joueur == 1 ? 2 : 1;
@@ -62,7 +67,7 @@ function remiseZero(){
 }
 
 
-
+/* function jouerPion pour jouer un pion */
 function jouerPion(i){
     // extrait le 1er et 3ème caractère dans la chaine i qui est de la forme 2:5
 	y=eval(i.charAt(0));
@@ -99,6 +104,8 @@ function jouerPion(i){
 	verificationPions();
 }
 
+
+/* Programme principale */
 document.write("<center><table border=\"3\" cellpadding=\"0\" cellspacing=\"0\" bordercolor=\"#003300\">");
 for (i=1;i<=6;i++){
  	document.write("<tr>");
