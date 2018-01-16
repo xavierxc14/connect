@@ -29,7 +29,8 @@ function scorePlayerYellow() {
 }
 
 /* function verificationPions pour verifier les pions. */
-function verificationPions() {
+function verificationPions(joueur) {
+    var nonJoue = 0;
     for (var i = 1; i <= 6; i++) {
         var countX = 0;
         var countY = 0;
@@ -37,6 +38,9 @@ function verificationPions() {
             countX = grille[i][j] === joueur ? countX + 1 : 0;
             if (j !== 7) {
                 countY = grille[j][i] === joueur ? countY + 1 : 0;
+            }
+            if (grille[i][j] === 0) {
+                nonJoue++;
             }
             if (countX === 4 || countY === 4) {
                 alert('Joueur ' + joueur + ' a gagne');
@@ -50,7 +54,10 @@ function verificationPions() {
             }
         }
     }
-    joueur = joueur === 1 ? 2 : 1;
+    if (nonJoue === 0) {
+        alert('Match nul');
+        remiseZero();
+    }
 }
 
 /* function remiseZero : pour commencer une nouvelle partie. */
@@ -58,7 +65,7 @@ function remiseZero() {
     for (var i = 1; i <= 6; i++) {
         for (var j = 1; j <= 7; j++) {
             var cellule = i + ":" + j;
-            document.getElementById(cellule).innerHTML = '<img src="img/images/blanc.png" width="60" height="60" />';
+            document.getElementById(cellule).innerHTML = '<img src="img/images/blanc.png" class="img-responsive center-block" />';
             grille[i][j] = 0;
         }
         joueur = 1;
@@ -91,30 +98,35 @@ function jouerPion(i) {
         document.getElementById("score").innerHTML = '&nbsp;';
         var cellule = n + ":" + x;
         if (joueur === 1) {
-            document.getElementById(cellule).innerHTML = '<img src="img/images/jaune.png" width="60" height="60" />';
+            document.getElementById(cellule).innerHTML = '<img src="img/images/jaune.png" class="img-responsive center-block" />';
             grille[n][x] = 1;
             document.getElementById("ma_balise").innerHTML = 'Couleur du prochain pion joué : Rouge';
             document.getElementById("ma_balise").style.color = "red";
+            verificationPions(joueur);
+            joueur = joueur === 1 ? 2 : 1;
         }
         else {
-            document.getElementById(cellule).innerHTML = '<img src="img/images/rouge.png" width="60" height="60" />';
+            document.getElementById(cellule).innerHTML = '<img src="img/images/rouge.png" class="img-responsive center-block" />';
             grille[n][x] = 2;
             document.getElementById("ma_balise").innerHTML = 'Couleur du prochain pion joué : Jaune';
             document.getElementById("ma_balise").style.color = "yellow";
+            verificationPions(joueur);
+            joueur = joueur === 1 ? 2 : 1;
         }
     }
-    verificationPions();
 }
 
 
 /* Programme principale */
-document.write("<center><table border=\"3\" cellpadding=\"0\" cellspacing=\"0\" bordercolor=\"#003300\">");
+var placeholder = document.getElementById('placeholder');
+var table = "<table border=\"3\" cellpadding=\"0\" cellspacing=\"0\" bordercolor=\"#003300\" class='table'>";
 for (i = 1; i <= 6; i++) {
-    document.write("<tr>");
+    table += "<tr>";
     for (j = 1; j <= 7; j++) {
-        document.write("<td width=\"60\" height=\"60\" id=\"" + i + ":" + j + "\" onClick='jouerPion(\"" + i + ":" + j + "\")'><img src=\"img/images/blanc.png\" width=\"60\" height=\"60\" /></td>");
+        table += "<td width=\"60\" height=\"60\" id=\"" + i + ":" + j + "\" onClick='jouerPion(\"" + i + ":" + j + "\")'><img src=\"img/images/blanc.png\" class=\"img-responsive center-block\" /></td>";
     }
-    document.write("</tr>");
+    table += "</tr>";
 }
-document.write("</table></center>");
+table += "</table>";
+placeholder.innerHTML += table;
 remiseZero();
