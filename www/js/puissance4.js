@@ -3,8 +3,25 @@
 // variables globales :
 var grille = new Array(7); // les indices vont de 0 à 6, seuls les indices 1 à 6 correspondent à la grille réelle
 // pour créer un tableau à 2 dimensions on crée à la main un second tableau dans le premier :
-for (var i = 0; i < 6 i++) {
+for (var i = 1; i <= 6; i++) {
 	grille[i] = new Array(8);
+}
+
+var valueOfInputRed = document.getElementById("scoreRouge").value = 0;
+var valueOfInputYellow = document.getElementById("scoreJaune").value = 0;
+document.getElementById("ma_balise").style.color = "yellow";
+
+
+function scorePlayerRed(){
+   scoresRed = document.getElementById("scoreRouge").value;
+   scoresRed++;
+   document.getElementById("scoreRouge").value = scoresRed;
+}
+
+function scorePlayerYellow(){
+   scoresYellow = document.getElementById("scoreJaune").value;
+   scoresYellow++;
+   document.getElementById("scoreJaune").value = scoresYellow;
 }
 
 function verificationPions() {
@@ -19,6 +36,11 @@ function verificationPions() {
 		}
 		if (countX == 4 || countY == 4) {
 			alert('Joueur ' + joueur + ' a gagne');
+			if (joueur == 1) {
+			    scorePlayerYellow();
+			} else {
+			    scorePlayerRed();
+			}
 		}
 	}
 	joueur = joueur == 1 ? 2 : 1;
@@ -33,7 +55,8 @@ function remiseZero(){
 		    grille[i][j]=0;
 		}
 	joueur=1;
-	document.getElementById("ma_balise").innerHTML = 'Couleur du prochain pion joué : JAUNE';
+	document.getElementById("ma_balise").innerHTML = 'Couleur du prochain pion joué : Jaune';
+	document.getElementById("ma_balise").style.color = "yellow";
 	}
 	document.getElementById("score").innerHTML = '&nbsp;';
 }
@@ -63,22 +86,18 @@ function jouerPion(i){
 		if (joueur==1){
 		 document.getElementById(cellule).innerHTML = '<img src="img/images/jaune.png" width="60" height="60" />';
 		 grille[n][x]=1;
-		//  joueur=2;
-		 document.getElementById("ma_balise").innerHTML = 'Couleur du prochain pion joué : ROUGE';
+		 document.getElementById("ma_balise").innerHTML = 'Couleur du prochain pion joué : Rouge';
+		 document.getElementById("ma_balise").style.color = "red";
 		}
 		else{
 		 document.getElementById(cellule).innerHTML = '<img src="img/images/rouge.png" width="60" height="60" />';
 		 grille[n][x]=2;
-		//  joueur=1;
 		 document.getElementById("ma_balise").innerHTML = 'Couleur du prochain pion joué : Jaune';
+		 document.getElementById("ma_balise").style.color = "yellow";
 		}
 	}
 	verificationPions();
 }
-
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Programme principal
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 document.write("<center><table border=\"3\" cellpadding=\"0\" cellspacing=\"0\" bordercolor=\"#003300\">");
 for (i=1;i<=6;i++){
@@ -89,4 +108,4 @@ for (i=1;i<=6;i++){
 	document.write("</tr>");
 	}
 document.write("</table></center>");
-remiseZero()
+remiseZero();
