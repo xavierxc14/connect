@@ -33,19 +33,20 @@ function verificationPions() {
 		countX = 0;
 		countY = 0;
 		for (var j = 1; j <= 7; j++) {
-			countX = countX + (grille[i][j] == joueur ? 1 : 0);
+			countX = grille[i][j] == joueur ? countX + 1 : 0;
 			if (j != 7) {
-				countY = countY + (grille[j][i] == joueur ? 1 : 0);
+				countY = grille[j][i] == joueur ? countY + 1 : 0;
 			}
-		}
-		if (countX == 4 || countY == 4) {
-			alert('Joueur ' + joueur + ' a gagne');
-			if (joueur == 1) {
-			    scorePlayerYellow();
-			} else {
-			    scorePlayerRed();
+			if (countX == 4 || countY == 4) {
+				alert('Joueur ' + joueur + ' a gagne');
+				if (joueur == 1) {
+				    scorePlayerYellow();
+				} else {
+				    scorePlayerRed();
+				}
+				remiseZero();
+				return;
 			}
-			remiseZero();
 		}
 	}
 	joueur = joueur == 1 ? 2 : 1;
