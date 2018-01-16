@@ -1,29 +1,33 @@
 /* Fichier javascript puissance4.js */
 
 // variables globales :
-var grille= new Array(7); // les indices vont de 0 à 6, seuls les indices 1 à 6 correspondent à la grille réelle
+var grille = new Array(7); // les indices vont de 0 à 6, seuls les indices 1 à 6 correspondent à la grille réelle
 // pour créer un tableau à 2 dimensions on crée à la main un second tableau dans le premier :
-for (i=0;i<=6;i++) {
-	grille[i]= new Array(8);
+for (var i = 0; i < 6 i++) {
+	grille[i] = new Array(8);
 }
 
-
-
-function verification_4_pions(){
-    for (i=1;i<=6;i++) {
-        for (j=1;j<=7;j++) {
-        cellule=i+":"+j;
-        //alert(cellule);
-        //alert(grille[i][j]);
-        }
-    }
+function verificationPions() {
+	for (var i = 1; i <= 6; i++) {
+		countX = 0;
+		countY = 0;
+		for (var j = 1; j <= 7; j++) {
+			countX = countX + (grille[i][j] == joueur ? 1 : 0);
+			if (j != 7) {
+				countY = countY + (grille[j][i] == joueur ? 1 : 0);
+			}
+		}
+		if (countX == 4 || countY == 4) {
+			alert('Joueur ' + joueur + ' a gagne');
+		}
+	}
+	joueur = joueur == 1 ? 2 : 1;
 }
 
-
-/* function remise_a_zero : pour commencer une nouvelle partie. */
-function remise_a_zero(){
-    for (i=1;i<=6;i++) {
-	    for (j=1;j<=7;j++) {
+/* function remiseZero : pour commencer une nouvelle partie. */
+function remiseZero(){
+    for (var i = 1; i <= 6; i++) {
+	    for (var j = 1; j <= 7; j++) {
 		    cellule=i+":"+j;
 		    document.getElementById(cellule).innerHTML = '<img src="img/images/blanc.png" width="60" height="60" />';
 		    grille[i][j]=0;
@@ -36,8 +40,7 @@ function remise_a_zero(){
 
 
 
-function jouer_pion(i){
-    verification_4_pions();
+function jouerPion(i){
     // extrait le 1er et 3ème caractère dans la chaine i qui est de la forme 2:5
 	y=eval(i.charAt(0));
 	x=eval(i.charAt(2));
@@ -60,16 +63,17 @@ function jouer_pion(i){
 		if (joueur==1){
 		 document.getElementById(cellule).innerHTML = '<img src="img/images/jaune.png" width="60" height="60" />';
 		 grille[n][x]=1;
-		 joueur=2;
+		//  joueur=2;
 		 document.getElementById("ma_balise").innerHTML = 'Couleur du prochain pion joué : ROUGE';
 		}
 		else{
 		 document.getElementById(cellule).innerHTML = '<img src="img/images/rouge.png" width="60" height="60" />';
 		 grille[n][x]=2;
-		 joueur=1;
+		//  joueur=1;
 		 document.getElementById("ma_balise").innerHTML = 'Couleur du prochain pion joué : Jaune';
 		}
 	}
+	verificationPions();
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -80,9 +84,9 @@ document.write("<center><table border=\"3\" cellpadding=\"0\" cellspacing=\"0\" 
 for (i=1;i<=6;i++){
  	document.write("<tr>");
 	for (j=1;j<=7;j++){
- 		document.write("<td width=\"60\" height=\"60\" id=\""+i+":"+j+"\" onClick='jouer_pion(\""+i+":"+j+"\")'><img src=\"img/images/blanc.png\" width=\"60\" height=\"60\" /></td>");
+ 		document.write("<td width=\"60\" height=\"60\" id=\""+i+":"+j+"\" onClick='jouerPion(\""+i+":"+j+"\")'><img src=\"img/images/blanc.png\" width=\"60\" height=\"60\" /></td>");
 		}
 	document.write("</tr>");
 	}
 document.write("</table></center>");
-remise_a_zero()
+remiseZero()
