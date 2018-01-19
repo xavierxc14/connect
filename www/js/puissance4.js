@@ -29,7 +29,7 @@ function scorePlayerYellow() {
 }
 
 /* function verificationPions pour verifier les pions. */
-function verificationPions(joueur) {
+function verificationPions() {
     var nonJoue = 0;
     for (var i = 1; i <= 6; i++) {
         var countX = 0;
@@ -54,6 +54,7 @@ function verificationPions(joueur) {
             }
         }
     }
+    joueur = joueur === 1 ? 2 : 1;
     if (nonJoue === 0) {
         alert('Match nul');
         remiseZero();
@@ -68,10 +69,10 @@ function remiseZero() {
             document.getElementById(cellule).innerHTML = '<img src="img/images/blanc.png" class="img-responsive center-block" />';
             grille[i][j] = 0;
         }
-        joueur = 1;
-        document.getElementById("ma_balise").innerHTML = 'Couleur du prochain pion joué : Jaune';
-        document.getElementById("ma_balise").style.color = "yellow";
     }
+    joueur = 1;
+    document.getElementById("ma_balise").innerHTML = 'Couleur du prochain pion joué : Jaune';
+    document.getElementById("ma_balise").style.color = "yellow";
     document.getElementById("score").innerHTML = '&nbsp;';
 }
 
@@ -102,17 +103,14 @@ function jouerPion(i) {
             grille[n][x] = 1;
             document.getElementById("ma_balise").innerHTML = 'Couleur du prochain pion joué : Rouge';
             document.getElementById("ma_balise").style.color = "red";
-            verificationPions(joueur);
-            joueur = joueur === 1 ? 2 : 1;
         }
         else {
             document.getElementById(cellule).innerHTML = '<img src="img/images/rouge.png" class="img-responsive center-block" />';
             grille[n][x] = 2;
             document.getElementById("ma_balise").innerHTML = 'Couleur du prochain pion joué : Jaune';
             document.getElementById("ma_balise").style.color = "yellow";
-            verificationPions(joueur);
-            joueur = joueur === 1 ? 2 : 1;
         }
+        verificationPions();
     }
 }
 
