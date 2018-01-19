@@ -1,5 +1,5 @@
 /* Fichier javascript puissance4.js */
-
+/* Autheurs: Xavier NAUNAY & Kevin ABRIAL */
 // variables globales :
 var joueur;
 var grille = new Array(7); // les indices vont de 0 à 6, seuls les indices 1 à 6 correspondent à la grille réelle
@@ -31,30 +31,29 @@ function scorePlayerYellow() {
 /* function verificationPions pour verifier les pions. */
 function verificationPions() {
     var nonJoue = 0;
+    // on verifie chaque ligne et colonnes pour chaque valeur des cellules.
     for (var i = 1; i <= 6; i++) {
-        var countX = 0;
-        var countY = 0;
+        var countX = 0, countY = 0;
         for (var j = 1; j <= 7; j++) {
             countX = grille[i][j] === joueur ? countX + 1 : 0;
+            // Il y a une colonne de plus que les lignes.
             if (j !== 7) {
                 countY = grille[j][i] === joueur ? countY + 1 : 0;
             }
-            if (grille[i][j] === 0) {
-                nonJoue++;
-            }
+            // On verifie s'il existe une cellule qui est egale a zero.
+            // On incremente la variable nonJoue.
+            nonJoue += grille[i][j] === 0 ? 1 : 0;
             if (countX === 4 || countY === 4) {
                 alert('Joueur ' + joueur + ' a gagne');
-                if (joueur === 1) {
-                    scorePlayerYellow();
-                } else {
-                    scorePlayerRed();
-                }
+                joueur === 1 ? scorePlayerYellow() : scorePlayerRed();
                 remiseZero();
                 return;
             }
         }
     }
+    // On change le joueur si personne a gagner.
     joueur = joueur === 1 ? 2 : 1;
+    // On verifie si il y a match nul entre les deux joueurs.
     if (nonJoue === 0) {
         alert('Match nul');
         remiseZero();
